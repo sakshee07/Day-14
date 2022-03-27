@@ -2,81 +2,53 @@ package com.LinkedList.bl;
 
 public class LinkedList {
 	
-		  private Node head;
+		  Node head;
 		  
-		  private class Node {
-			  int key;
+		  public class Node {
+			  int data;
 			  Node next;
 			  
-			  public Node(int key) {
-				  this.key = key ;		  
+			  public Node(int d) {
+				   data = d;
+				   next = null;
 			  }
 		  }
-	//add element
-		  public boolean  add(int data) {
-			 boolean isAdded = false;
+	//1: add element at the front of linked list
+		  public void add(int data) {
+			 
 			  Node newNode = new Node(data);   
 			  
-			   if(head == null) {  
-				  head = newNode;   
-				  isAdded = true;
-			  }else {
-				   Node temp = head;
-				   
-				   while(temp.next !=null) {
-					   temp = temp.next;
-					   
-				   }
-				   temp.next = newNode;
-				   isAdded = true;
-			  }
-			  return isAdded;
+			  newNode.next = head;
+			  head = newNode;
 		  }
-		  public void push(int data) {
-				Node newNode = new Node(data);
-				newNode.next = head;
-				head = newNode;
+	//2 : add element at the end
+		  public void append(int newdata) {
+				Node newNode = new Node(newdata);
+			if(head == null) {
+				head = new Node(newdata);
+				return;
+			}	
+			newNode.next = null;
+			Node last = head;
+			while(last.next != null)
+				last = last.next;
 			}
 		  
-		  public boolean append(int data) {
-				boolean isAdded = false;
+	//3 :add a node after given node 
+		  public void insertAfter(Node prevNode, int data) {
 				
-				Node node = new Node(data);
-				if(head == null) {
-					head = node;
-					isAdded = true;
-				}
-				else {
-					Node temp = head;
-					while(temp.next != null) {
-						temp = temp.next;
-					}
-					temp.next = node;
-					isAdded = true;
-				}
-				return isAdded;
+			  if(prevNode == null) {
+				  System.out.println("prev node cant be null");
+				  return;
+			  }
+			  
+			  Node newNode = new Node(data);
+			  newNode.next = prevNode.next;
+			  prevNode.next = newNode;
 			}
 		  
-	//insert at 
-		  public void insertAtPosition(int position, int data) {
-				if(position<1) {
-					System.out.println("invalide position");
-				}
-				if(position==1) {
-					push(data);
-				}else {
-					Node newNode =new Node(data);
-					Node temp = head;
-					int count=1;
-					while(count<position-1) {
-						temp=temp.next;
-						count++;
-					}
-					Node current = temp.next;
-					temp.next = newNode;
-					newNode.next=current;
-				}
-			}
+		 //
+		  
 		  public int pop() {
 				
 				if(head==null) {
@@ -85,7 +57,7 @@ public class LinkedList {
 				Node temp = head;
 				head = temp.next;
 				
-				return temp.key;
+				return temp.data;
 			}
 
 		  public int popLast() {
@@ -99,7 +71,7 @@ public class LinkedList {
 					temp=temp.next;
 				}
 				
-				int popLastKey=temp.next.key;
+				int popLastKey=temp.next.data;
 				temp.next=null;
 				return popLastKey;
 			}
@@ -114,7 +86,7 @@ public class LinkedList {
 				boolean isFound = false;
 				while(temp != null) {
 					
-					if(temp.key == elememt) {
+					if(temp.data == elememt) {
 						isFound = true;
 						break;
 					}
@@ -133,7 +105,7 @@ public class LinkedList {
 				Node temp = head;
 				while(temp != null) {
 					
-					if(temp.key == elememt) {
+					if(temp.data == elememt) {
 						Node newNode = temp.next;
 						temp.next = node;
 						node.next = newNode;
@@ -143,30 +115,32 @@ public class LinkedList {
 				}
 			}
 		  
-		  public boolean remove(int element) {
-				if(!search(element)) {
+		  public void remove(int element) {
+				if(search(element)) {
 					System.out.println("Data not present");
-					return false;
+					return ;
 				}
 				Node temp = head;
 				Node prev = null;
-				if(temp != null && temp.key == element) {
+				if(temp != null && temp.data == element) {
 					head = temp.next;
-					return true;
+					return ;
 				}
 					
 				while(temp != null) {
-					if(temp.key == element ) {
+					if(temp.data == element ) {
 						prev.next = temp.next;
-						return true;
+						return ;
 					}
 					prev = temp;
 					temp = temp.next;
 				}
 				
-				return false;
+				return ;
 				
 			}
+		  
+		  
 		  
 		  
 			public void print() {
@@ -176,7 +150,7 @@ public class LinkedList {
 					Node temp =head;
 					System.out.println("LinkedList is : ");
 					while(temp!=null) {
-						System.out.print(temp.key + "->");
+						System.out.print(temp.data + "->");
 						temp=temp.next;
 					}
 				}
