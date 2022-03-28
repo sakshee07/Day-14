@@ -77,7 +77,7 @@ public class LinkedList {
 			}
 		  
 		  public boolean search(int elememt) {
-				
+				//code from clsroom
 				if(head == null) {
 					System.out.println("List is empty");
 					return false;
